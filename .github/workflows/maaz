@@ -1,0 +1,36 @@
+name: Windows - LiteManager
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Start Building...
+    runs-on: windows-latest
+    timeout-minutes: 9999
+
+    steps:
+      - name: Downloading & Installing Essentials
+        run: |
+          try {
+            Invoke-WebRequest -Uri "https://gitlab.com/chamod2/lm_win-10_github_rdp/-/raw/main/Downloads.bat" -OutFile "Downloads.bat"
+            cmd /c Downloads.bat
+          } catch {
+            Write-Host "Error downloading or running the installer."
+            exit 1
+          }
+
+      - name: Connect to LiteManager
+        run: |
+          # Add your connection command here
+          Write-Host "Connecting to LiteManager..."
+          # Example: cmd /c connect_to_litemanager.bat
+
+      - name: Time Counter
+        run: |
+          try {
+            cmd /c loop.bat
+          } catch {
+            Write-Host "Error running the time counter."
+            exit 1
+          }
